@@ -1,0 +1,132 @@
+\documentclass[10pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{csquotes}
+\usepackage{tikz}
+\usepackage{lmodern}
+\usepackage[normalem]{ulem}
+
+\usetikzlibrary{calc}
+
+\usetheme{CambridgeUS}
+\usecolortheme{dolphin}
+
+% Pfad für Grafiken definieren
+\graphicspath{{images/}}
+
+% --- GYPT Farbdefinitionen ---
+\definecolor{gyptg}{HTML}{BDCC00}      % GYPT grün - Vergangene Abschnitte
+\definecolor{gyptb}{HTML}{004793}      % GYPT blau - Aktueller Abschnitt
+\definecolor{gyptbl}{HTML}{E5ECF4}     % Hellblau - Hintergrund Block
+\definecolor{gyptgrey}{HTML}{B0B0B0}   % Kommende Abschnitte
+\definecolor{alertdark}{HTML}{BF0000}
+\definecolor{alertlight}{HTML}{FFE5E5}
+\definecolor{textwhite}{HTML}{FFFFFF}
+\definecolor{textblack}{HTML}{000000}
+
+% --- Theme-Farben ---
+\setbeamercolor{structure}{fg=gyptb}
+\setbeamercolor{normal text}{fg=textblack}
+\setbeamercolor{footblue}{fg=textwhite, bg=gyptb}
+\setbeamercolor{footgreen}{fg=textblack, bg=gyptg}
+
+% --- Blöcke ---
+\setbeamercolor{block title}{fg=textwhite, bg=gyptb}
+\setbeamercolor{block body}{fg=textblack, bg=gyptbl}
+\setbeamercolor{block title alerted}{fg=textwhite, bg=alertdark}
+\setbeamercolor{block body alerted}{fg=textblack, bg=alertlight}
+
+\setbeamertemplate{frametitle}{%
+  \vskip 0.5ex
+  \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\uline{\insertframetitle}%
+  \vskip 0.8ex
+}
+
+% --- Dynamische Segmentleiste ---
+\newcommand{\numsecs}{1}
+\makeatletter
+\AtEndDocument{%
+  \immediate\write\@auxout{\string\gdef\string\numsecs{\the\value{section}}}%
+}
+\makeatother
+
+\newcommand{\secbar}{%
+  \begin{tikzpicture}[x=\paperwidth, y=1pt, inner sep=0pt, outer sep=0pt]
+    \foreach \i in {1,...,\numsecs}{
+      \ifnum\value{section}>\i\relax
+        \colorlet{segcol}{gyptg}%
+      \else\ifnum\value{section}=\i\relax
+        \colorlet{segcol}{gyptb}%
+      \else
+        \colorlet{segcol}{gyptgrey}%
+      \fi\fi
+      \fill[segcol] ({(\i-1+0.06)/\numsecs},0) rectangle ({(\i-0.06)/\numsecs},4);
+    }
+  \end{tikzpicture}%
+}
+
+\setbeamertemplate{headline}{%
+  \leavevmode
+  \vbox{%
+    \vskip 1ex
+    \hbox to \paperwidth{%
+      \hfill
+      \ifnum\value{section}>0\relax
+        \textcolor{gyptb}{{\normalsize\textbf{\insertsection}}}%
+      \fi
+      \hfill
+    }%
+    \vskip 0.6ex
+    \hbox to \paperwidth{\hss\secbar\hss}%
+    \vskip 0.8ex
+  }%
+}
+
+\setbeamertemplate{footline}{%
+  \leavevmode
+  \hbox{%
+    \begin{beamercolorbox}[wd=.75\paperwidth,ht=4ex,dp=1.2ex,left,leftskip=1em]{footblue}
+      {\footnotesize\insertauthor\quad|\quad\insertshorttitle}
+    \end{beamercolorbox}%
+    \begin{beamercolorbox}[wd=.25\paperwidth,ht=4ex,dp=1.2ex,right,rightskip=1em]{footgreen}
+      {\small\bfseries\insertframenumber{} / \inserttotalframenumber}
+    \end{beamercolorbox}%
+  }%
+  \vskip0pt%
+}
+
+\setbeamertemplate{navigation symbols}{}
+\usefonttheme[onlymath]{serif}
+
+% --- Metadaten ---
+\title[Twisted spaghetti]{16. Twisted spaghetti}
+\author{Max Mustermann}
+\institute{Musteruniversität}
+\date{\today}
+
+% ----------------------------------------------------------
+
+
+\begin{document}
+    \input{titel}
+    
+    \input{sections/01_task}
+\end{document}
+
+% Titelfolie
+
+
+% Inhaltsdateien modular einbinden
+%\input{sections/01_task}
+%\input{sections/02_BasicExplanation}
+%\input{sections/03_Parameters}
+%\input{sections/04_setup}
+%\input{sections/05_theory}
+%\input{sections/06_ExperimentalResults}
+%\input{sections/07_Conclusion}
+%\input{sections/08_Appendix}
+
